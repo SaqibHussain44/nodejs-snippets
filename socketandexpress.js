@@ -1,21 +1,19 @@
-const express = require('express')
 var bodyParser = require('body-parser')
-var http = require('http');
 var Web3 = require('web3');
-var io = require('socket.io').listen(server);  //pass a http.Server instance
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-const app = express()
-var web3 = new Web3("https://rinkeby.infura.io/v3/someid");
-
-const port = 3000
 app.use(bodyParser.json())
 
-var server = http.createServer(app);
+var web3 = new Web3("https://rinkeby.infura.io/v3/***********");
+const port = 3000
 
 io.on('connection', client => {
     console.log('--------- connected **')
     client.on('event', data => { 
-        console.log('--------- event on')
+        console.log('--------- event on', data)
+        return 'abc'
     });
     client.on('disconnect', () => {
         console.log('--------- disconnect on')
